@@ -9,8 +9,7 @@ logger = logging.getLogger(__name__)
 # Set constants
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 800
-SCREEN_TITLE = "Space Shooter"
-
+SCREEN_TITLE = "Space Shooter" 
 ENEMY_COLOR_DIFFICULTIES = ["Blue", "Green", "Red", "Black"] # The colors of enemies based on their difficulty (index).
 
 PLAYER_BULLET_DAMAGE = 10
@@ -324,6 +323,7 @@ class Window(arcade.Window):
         # If the game is over, draw the Game Over text.
         if (self.game_over):
             arcade.draw_text("GAME OVER!", SCREEN_WIDTH / 2 - 90, SCREEN_HEIGHT / 2 - 15, open_color.white, 30, bold = True)
+            arcade.draw_text("Press R to restart.", SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 45, open_color.white, 24, bold = True)
 
     def on_mouse_motion(self, x, y, dx, dy):
         """Called to update our objects. Happens approximately 60 times per second."""
@@ -342,6 +342,12 @@ class Window(arcade.Window):
         # If the game is not over and the user pressed the left mouse button, toggle off the shooting.
         if (button == arcade.MOUSE_BUTTON_LEFT):
             self.player.set_shooting(False)
+
+    def on_key_press(self, key, modifiers):
+        if (self.game_over and key == arcade.key.R):
+            self.setup()
+            self.game_over = False
+        
 
 def main():
     window = Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
